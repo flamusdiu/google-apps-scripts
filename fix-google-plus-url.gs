@@ -2,7 +2,7 @@ function fix_gplus_url() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = SpreadsheetApp.getActiveSheet();
 
-  var googleEX = new XRegExp (/\++[^/]+|[0-9]{21}/);
+  var googleEX = new XRegExp (/\++[^/]+|\d{21}/);
   
   var colN = sheet.getLastColumn();
   var rowN = sheet.getLastRow();

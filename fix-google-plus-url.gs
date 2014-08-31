@@ -1,3 +1,9 @@
+/**
+
+REQUIRES: https://github.com/slevithan/xregexp to work.
+
+**/
+
 function fix_gplus_url() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = SpreadsheetApp.getActiveSheet();
@@ -20,8 +26,6 @@ function fix_gplus_url() {
       
       if (current.getValue()) {
         var uid = googleEX.exec(current.getValue());
-      
-        Logger.log(uid);
         
         if (uid) {
           var new_gplus_url = '=hyperlink("https://plus.google.com/' + uid + '")';

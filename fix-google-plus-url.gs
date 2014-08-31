@@ -4,6 +4,12 @@ REQUIRES: https://github.com/slevithan/xregexp to work.
 
 **/
 
+/*************************************************
+*  
+*  Primary Function for scrips. 
+*  
+*
+**************************************************/
 function fix_gplus_url() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = SpreadsheetApp.getActiveSheet();
@@ -16,7 +22,7 @@ function fix_gplus_url() {
   var colGPlus = find_gplus_column(rowN,colN);
   
   if (colGPlus == 0) {
-    Logger.log("No G+ URL Profile column in spreadsheet!");
+   Logger.log("No G+ URL Profile column in spreadsheet! Stopping script.");
   } else {
     var range =  sheet.getRange(colGPlus[0],colGPlus[1],rowN);
     
@@ -31,14 +37,24 @@ function fix_gplus_url() {
           var new_gplus_url = '=hyperlink("https://plus.google.com/' + uid + '")';
         
           current.setFormula(new_gplus_url);
+          
+          if (current.getFormula() != new_gplus_url) {
+            //Something when wrong
+            set_range_error(current);
+          }
         } else {
-          current.setBackground('red');
-          current.setFontColor('white');
-          Logger.log("Could not find user's UID! Error for G+ URL: " + current.getValue());
+          set_range_error(current);
         }
       } 
     }
   }
+}
+
+
+function set_range_error(range) {
+  range.setBackground('red');
+  range.setFontColor('white');
+  Logger.log("Could not find user's UID! Error for G+ URL: " + range.getValue());
 }
 
 function find_gplus_column(colN) {
@@ -57,10 +73,15 @@ function find_gplus_column(colN) {
   return 0;
 }
 
-function onOpen() {
+
+function onOpen(e) {
   var ui = SpreadsheetApp.getUi();
   // Or DocumentApp or FormApp.
   ui.createMenu('G+ URL Fixer')
       .addItem('Run Fix', 'fix_gplus_url')
       .addToUi();
+}
+
+function onInstall(e) {
+  onOpen(e);
 }

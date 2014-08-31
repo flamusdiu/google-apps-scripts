@@ -19,14 +19,14 @@ function fix_gplus_url() {
       var current = sheet.getRange(row, colGPlus[1]); 
       
       if (current.getValue()) {
-        var uid = googleEX.exec(current.getValue())
+        var uid = googleEX.exec(current.getValue());
       
         Logger.log(uid);
         
         if (uid) {
-          var new_gplus_url = "https://plus.google.com/" + uid;
+          var new_gplus_url = '=hyperlink("https://plus.google.com/' + uid + '")';
         
-          current.setValue(new_gplus_url);
+          current.setFormula(new_gplus_url);
         } else {
           current.setBackground('red');
           current.setFontColor('white');
@@ -37,12 +37,6 @@ function fix_gplus_url() {
   }
 }
 
-function filter_bad_gplus_urls() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = SpreadsheetApp.getActiveSheet();
-  
-  sheet.s
-}
 function find_gplus_column(colN) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = SpreadsheetApp.getActiveSheet();

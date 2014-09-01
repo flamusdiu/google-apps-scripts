@@ -34,13 +34,14 @@ function fix_gplus_url() {
         var uid = googleEX.exec(current.getValue());
         
         if (uid) {
-          var new_gplus_url = '=hyperlink("https://plus.google.com/' + uid + '")';
-          if (current.getFormula() != new_gplus_url) {
-              var new_gplus_url = '=hyperlink("https://plus.google.com/' + uid + '")';
-        
-              current.setFormula(new_gplus_url);
+          var new_gplus_url = 'https://plus.google.com/' + encodeURIComponent(uid).replace(/%2B/,"+");
+          var new_gplus_link_label = 'https://plus.google.com/' + decodeURIComponent(uid);
+          var new_gplus_url_formula = '=hyperlink("' + new_gplus_url + '","' + new_gplus_link_label + '")';
+          if (current.getFormula() != new_gplus_url_formula) {
+
+              current.setFormula(new_gplus_url_formula);
           
-              if (current.getFormula() != new_gplus_url) {
+              if (current.getFormula() != new_gplus_url_formula) {
                  //Something when wrong
                  set_range_error(current);
               }

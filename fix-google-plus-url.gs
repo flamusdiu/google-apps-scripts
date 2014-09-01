@@ -26,7 +26,7 @@ function fix_gplus_url() {
   } else {
     var range =  sheet.getRange(colGPlus[0],colGPlus[1],rowN);
     
-    for ( var row = colGPlus[0]; row < rowN; row ++) {
+    for ( var row = colGPlus[0]; row <= rowN; row ++) {
       
       var current = sheet.getRange(row, colGPlus[1]); 
       
@@ -35,12 +35,15 @@ function fix_gplus_url() {
         
         if (uid) {
           var new_gplus_url = '=hyperlink("https://plus.google.com/' + uid + '")';
-        
-          current.setFormula(new_gplus_url);
-          
           if (current.getFormula() != new_gplus_url) {
-            //Something when wrong
-            set_range_error(current);
+              var new_gplus_url = '=hyperlink("https://plus.google.com/' + uid + '")';
+        
+              current.setFormula(new_gplus_url);
+          
+              if (current.getFormula() != new_gplus_url) {
+                 //Something when wrong
+                 set_range_error(current);
+              }
           }
         } else {
           set_range_error(current);

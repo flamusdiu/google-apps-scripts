@@ -1,9 +1,3 @@
-/**
-
-REQUIRES: https://github.com/slevithan/xregexp to work.
-
-**/
-
 /*************************************************
 *  
 *  Primary Function for scrips. 
@@ -14,7 +8,7 @@ function fix_gplus_url() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = SpreadsheetApp.getActiveSheet();
 
-  var googleEX = new XRegExp (/\++[^/]+|\d{21}/);
+  var googleEX = new RegExp (/\++[^/]+|\d{21}/);
   
   var colN = sheet.getLastColumn();
   var rowN = sheet.getLastRow();
@@ -65,7 +59,7 @@ function find_gplus_column(colN) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = SpreadsheetApp.getActiveSheet();
   
-  var googleEX = new XRegExp("(google\.com)");
+  var googleEX = new RegExp("(google\.com)");
   for ( var row = 1; row < 10; row++ ) {
     for (var col = 1; col < colN+1; col++ ) {
       if (googleEX.exec(sheet.getRange(row,col).getValue())) {

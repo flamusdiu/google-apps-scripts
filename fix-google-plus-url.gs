@@ -22,53 +22,53 @@ function fix_urls() {
       
       if (col.gPlusCol > 0) {
         var gPlus = sheet.getRange(row, col.gPlusCol); 
+        
+        if (gPlus.getValue()) {
+          var uid = googleEX.exec(gPlus.getValue());
+          
+          if (uid) {
+            var new_gplus_url = 'https://plus.google.com/' + encodeURIComponent(uid).replace(/%2B/,"+");
+            var new_gplus_link_label = 'https://plus.google.com/' + decodeURIComponent(uid);
+            var new_gplus_url_formula = '=hyperlink("' + new_gplus_url + '","' + new_gplus_link_label + '")';
+            if (gPlus.getFormula() != new_gplus_url_formula) {
+              
+              gPlus.setFormula(new_gplus_url_formula);
+              
+              if (gPlus.getFormula() != new_gplus_url_formula) {
+                //Something when wrong
+                set_range_error(gPlus);
+              }
+            }
+          } else {
+            set_range_error(gPlus);
+          }
+        }
       }
       
       if (col.gCommunityCol > 0) {
         var gCommunity = sheet.getRange(row, col.gCommunityCol);
-      }
-    
-      if (gPlus.getValue()) {
-        var uid = googleEX.exec(gPlus.getValue());
         
-        if (uid) {
-          var new_gplus_url = 'https://plus.google.com/' + encodeURIComponent(uid).replace(/%2B/,"+");
-          var new_gplus_link_label = 'https://plus.google.com/' + decodeURIComponent(uid);
-          var new_gplus_url_formula = '=hyperlink("' + new_gplus_url + '","' + new_gplus_link_label + '")';
-          if (gPlus.getFormula() != new_gplus_url_formula) {
-
-              gPlus.setFormula(new_gplus_url_formula);
-          
-              if (gPlus.getFormula() != new_gplus_url_formula) {
-                 //Something when wrong
-                 set_range_error(gPlus);
-              }
-          }
-        } else {
-          set_range_error(gPlus);
-        }
-      }
-      
-      if (gCommunity.getValue()) {
-        var uid = googleEX.exec(gCommunity.getValue());
-        
-        if (uid) {
-          var new_gplus_url = 'https://plus.google.com/communities/' + encodeURIComponent(uid).replace(/%2B/,"+");
-          var new_gplus_link_label = 'https://plus.google.com/communities/' + decodeURIComponent(uid);
-          var new_gplus_url_formula = '=hyperlink("' + new_gplus_url + '","' + new_gplus_link_label + '")';
-          if (gCommunity.getFormula() != new_gplus_url_formula) {
-
-              gCommunity.setFormula(new_gplus_url_formula);
-          
-              if (gCommunity.getFormula() != new_gplus_url_formula) {
+        if (gCommunity.getValue()) {
+           var uid = googleEX.exec(gCommunity.getValue());
+           
+           if (uid) {
+             var new_gplus_url = 'https://plus.google.com/communities/' + encodeURIComponent(uid).replace(/%2B/,"+");
+             var new_gplus_link_label = 'https://plus.google.com/communities/' + decodeURIComponent(uid);
+             var new_gplus_url_formula = '=hyperlink("' + new_gplus_url + '","' + new_gplus_link_label + '")';
+             if (gCommunity.getFormula() != new_gplus_url_formula) {
+               
+               gCommunity.setFormula(new_gplus_url_formula);
+               
+               if (gCommunity.getFormula() != new_gplus_url_formula) {
                  //Something when wrong
                  set_range_error(gCommunity);
-              }
-          }
-        } else {
-          set_range_error(gCommunity);
-        }
-      } 
+               }
+             }
+           } else {
+             set_range_error(gCommunity);
+           }
+         } 
+      }
     }
   }
   
